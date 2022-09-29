@@ -3,38 +3,35 @@ from CCoinBox import CCoinBox
 
 class Test_CCoinBox(unittest.TestCase):
 
+    def setUp(self) -> None:
+        self.coinbox = CCoinBox()
+
+
     def test_ajouter_25c_vente_permise(self):
-        coinbox = CCoinBox()
-        coinbox.monnaie_courante = 1
+        self.coinbox.monnaie_courante = 1
 
-        coinbox.ajouter_25c()
+        self.coinbox.ajouter_25c()
 
-        self.assertTrue(coinbox.vente_permise)
+        self.assertTrue(self.coinbox.vente_permise)
 
 
     def test_ajouter_25c_vente_interdite(self):
-        coinbox = CCoinBox()
+        self.coinbox.ajouter_25c()
 
-        coinbox.ajouter_25c()
-
-        self.assertFalse(coinbox.vente_permise)
+        self.assertFalse(self.coinbox.vente_permise)
 
 
     def test_ajouter_25c_ajoute_une_seule_piece(self):
-        coinbox = CCoinBox()
+        self.coinbox.monnaie_courante = 0
 
-        coinbox.monnaie_courante = 0
+        self.coinbox.ajouter_25c()
 
-        coinbox.ajouter_25c()
-
-        self.assertEqual(coinbox.monnaie_courante, 1)
+        self.assertEqual(self.coinbox.monnaie_courante, 1)
 
 
     def test_retourne_monnaie_vente_interdite(self):
-        coinbox = CCoinBox()
+        self.coinbox.vente_permise = False
 
-        coinbox.vente_permise = False
+        self.coinbox.retourne_monnaie()
 
-        coinbox.retourne_monnaie()
-
-        self.assertFalse(coinbox.vente_permise)
+        self.assertFalse(self.coinbox.vente_permise)
